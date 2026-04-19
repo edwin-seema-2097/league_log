@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -e  # stop on first error
+set -e
 
 echo "======================================"
 echo " 1. Cleaning previous build artifacts"
@@ -18,7 +18,7 @@ echo "======================================"
 mvn test
 
 echo "======================================"
-echo " 4. Packaging application (optional)"
+echo " 4. Packaging application"
 echo "======================================"
 mvn package
 

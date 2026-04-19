@@ -20,13 +20,13 @@ public class LogRankProcessorTest {
                     "Lions 4, Grouches 0";
 
     @BeforeAll
-    void init() {
+    public void init() {
         logRankProcessor = new LogRankProcessor();
     }
 
     @Test
     @Order(1)
-    void testCacheInputLoadsAllMatches() {
+    public void testCacheInputLoadsAllMatches() {
         Inputs inputs = new Inputs("stdin");
         logRankProcessor.cacheInput(inputs, RAW_INPUT);
         assertEquals(5, inputs.getGames().size());
@@ -34,7 +34,7 @@ public class LogRankProcessorTest {
 
     @Test
     @Order(2)
-    void testProcessTeamPointCalculatesCorrectPoints() {
+    public void testProcessTeamPointCalculatesCorrectPoints() {
 
         logRankProcessor.processTeamPoint();
 
@@ -47,7 +47,7 @@ public class LogRankProcessorTest {
 
     @Test
     @Order(3)
-    void testRankTeamAssignsCorrectPositions() {
+    public void testRankTeamAssignsCorrectPositions() {
         logRankProcessor.rankTeam();
 
         assertEquals(1, logRankProcessor.getLog().get("Tarantulas").getLogPosition());
@@ -59,7 +59,7 @@ public class LogRankProcessorTest {
 
     @Test
     @Order(4)
-    void testPublishLogRankingsPrintsCorrectly() {
+    public void testPublishLogRankingsPrintsCorrectly() {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         System.setOut(new PrintStream(out));
 
@@ -67,11 +67,11 @@ public class LogRankProcessorTest {
 
         String output = out.toString();
 
-        assertTrue(output.contains("1. Tarantulas, 6pts"));
-        assertTrue(output.contains("2. Lions, 5pts"));
-        assertTrue(output.contains("3. FC Awesome, 1pts"));
-        assertTrue(output.contains("3. Snakes, 1pts"));
-        assertTrue(output.contains("5. Grouches, 0pts"));
+        assertTrue(output.contains("1. Tarantulas, 6 pts"));
+        assertTrue(output.contains("2. Lions, 5 pts"));
+        assertTrue(output.contains("3. FC Awesome, 1 pt"));
+        assertTrue(output.contains("3. Snakes, 1 pt"));
+        assertTrue(output.contains("5. Grouches, 0 pts"));
     }
 
 }
