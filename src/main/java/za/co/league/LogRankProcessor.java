@@ -45,9 +45,22 @@ public class LogRankProcessor {
     }
 
     public void publishLogRankings() {
-        for (String team: log.keySet()) {
-            TeamRanking ranking = log.get(team);
-            System.out.println(ranking.getLogPosition() + ". " + ranking.getTeam() + ", " + ranking.getLogPoints() + "pts");
+        List<TeamRanking> rankings = new ArrayList<>(log.values());
+        rankings.sort((r1, r2) -> {
+            int posCompare = Integer.compare(r1.getLogPosition(), r2.getLogPosition());
+            if (posCompare != 0) {
+                return posCompare;
+            }
+            return r1.getTeam().compareToIgnoreCase(r2.getTeam());
+        });
+
+        for (TeamRanking ranking : rankings) {
+            final Integer logPoints = ranking.getLogPoints();
+            String lable = "pts";
+            if (logPoints == 1) {
+                lable = "pt";
+            }
+            System.out.println(ranking.getLogPosition() + ". " + ranking.getTeam() + ", " + logPoints + " " + lable);
         }
     }
 
