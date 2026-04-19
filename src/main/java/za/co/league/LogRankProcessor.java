@@ -15,7 +15,7 @@ public class LogRankProcessor {
         publishLogRankings();
     }
 
-    private void rankTeam() {
+    public void rankTeam() {
         List<TeamRanking> rankings = new ArrayList<>();
         for (String team: log.keySet()) {
             rankings.add(log.get(team));
@@ -44,14 +44,14 @@ public class LogRankProcessor {
         }
     }
 
-    private void publishLogRankings() {
+    public void publishLogRankings() {
         for (String team: log.keySet()) {
             TeamRanking ranking = log.get(team);
             System.out.println(ranking.getLogPosition() + ". " + ranking.getTeam() + ", " + ranking.getLogPoints() + "pts");
         }
     }
 
-    private void processTeamPoint() {
+    public void processTeamPoint() {
         List<GameStats> games = inputs.getGames();
 
         for (GameStats game:games) {
@@ -103,7 +103,7 @@ public class LogRankProcessor {
         cacheInput(inputs, builder.toString());
     }
 
-    private void cacheInput(Inputs inputs, String input) {
+    void cacheInput(Inputs inputs, String input) {
         String[] games = input.split("\n");
         for (String game:games) {
             inputs.getGames().add(loadMatch(game));
@@ -111,7 +111,20 @@ public class LogRankProcessor {
         this.inputs = inputs;
     }
 
-    private GameStats loadMatch(String game) {
+    public Map<String,TeamRanking> getLog() {
+        Map<String, TeamRanking> logCopy = new HashMap<>();
+        for (String teamName : log.keySet()) {
+            TeamRanking rankingOriginal = log.get(teamName);
+            TeamRanking rankingCopy = new TeamRanking(teamName);
+
+            rankingCopy.setLogPosition(rankingOriginal.getLogPosition());
+            rankingCopy.setLogPoints(rankingOriginal.getLogPoints());
+            logCopy.put(teamName, rankingCopy);
+        }
+        return logCopy;
+    }
+
+    public GameStats loadMatch(String game) {
         GameStats gameStats;
         String[] teams = game.split(", ");
         String[] home = teams[0].split(" (?=\\d+$)");

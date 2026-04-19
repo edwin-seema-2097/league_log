@@ -1,6 +1,6 @@
 package za.co.league;
 
-public class LeagueRank {
+public class LeagueRankApplication {
 
     public static void main(String[] args) {
         LogRankProcessor logRankProcessor = new LogRankProcessor();
