@@ -12,7 +12,7 @@ e.g $ ./build_and_run.sh
 **resubmit (run using previous build)**\
 e.g $ ./resubmit.sh
 
-When the application is running the user will be guided by prompts on how to proceed.
+When the application is running, the user will be guided by prompts on how to proceed.
 
 # **Inputs.**
 A user has a choice to enter inputs using the command prompt or by passing a file name of a file that contains the inputs.
@@ -29,14 +29,16 @@ The 1st prompt the user will get will be to enter the number 1 or 2.
 
 The second prompt will be inputs depending on the choice from 1st prompt.
 
+## **Choices**
+
 ### If the choice is 1
 
-The use will be asked to enter inputs line by line and enter an empty line when they are done.
+The user will be asked to enter inputs line by line and enter an empty line when they are done.
 
 
 ### If the choice is 2
 
-The use will be asked to enter the file path and file name
+The user will be asked to enter the file path and file name
 
 ## Input Format
 Lions 3, Snakes 3\
