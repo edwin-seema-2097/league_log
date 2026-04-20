@@ -17,10 +17,6 @@ echo " 3. Running unit tests"
 echo "======================================"
 mvn test
 
-echo "======================================"
-echo " 4. Packaging application"
-echo "======================================"
-mvn package
 
 echo "======================================"
 echo " 5. Running application"
