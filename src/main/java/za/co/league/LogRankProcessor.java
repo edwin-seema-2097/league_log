@@ -1,6 +1,11 @@
 package za.co.league;
 
 
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 
 public class LogRankProcessor {
@@ -56,11 +61,11 @@ public class LogRankProcessor {
 
         for (TeamRanking ranking : rankings) {
             final Integer logPoints = ranking.getLogPoints();
-            String lable = "pts";
+            String label = "pts";
             if (logPoints == 1) {
-                lable = "pt";
+                label = "pt";
             }
-            System.out.println(ranking.getLogPosition() + ". " + ranking.getTeam() + ", " + logPoints + " " + lable);
+            System.out.println(ranking.getLogPosition() + ". " + ranking.getTeam() + ", " + logPoints + " " + label);
         }
     }
 
@@ -105,21 +110,61 @@ public class LogRankProcessor {
 
     private void ingestInputs() {
         Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Choose input method:");
+        System.out.println("Enter \"1\" to enter inputs manually");
+        System.out.println("Enter \"2\" to load inputs from file");
+        System.out.print("Enter choice: ");
+
+        int choice = Integer.parseInt(scanner.nextLine());
+
+        Inputs inputs;
+
+        String input;
+
+        switch (choice) {
+            case 1:
+                input = readFromStdin(scanner);
+                inputs = new Inputs("stdin");
+                break;
+            case 2:
+                input = readFromFile(scanner);
+                inputs = new Inputs("file");
+                break;
+            default:
+                throw new RuntimeException("Invalid choice");
+        }
+
+        cacheInput(inputs, input);
+    }
+
+    private String readFromFile(Scanner scanner) {
+        System.out.print("Enter file path: ");
+        String path = scanner.nextLine();
+
+        try {
+            return new String(Files.readAllBytes(Paths.get(path)), StandardCharsets.UTF_8);
+        } catch (IOException e) {
+            System.out.println("Error reading file: " + e.getMessage());
+            throw new RuntimeException(e);
+        }
+    }
+
+    private String readFromStdin(Scanner scanner) {
         StringBuilder builder = new StringBuilder();
         String input;
-        Inputs inputs = new Inputs("stdin");
         System.out.println("Enter multiple lines, enter empty line to stop: ");
 
         while(!(input = scanner.nextLine()).isEmpty()) {
             builder.append(input).append("\n");
         }
-        cacheInput(inputs, builder.toString());
+        return builder.toString();
     }
 
     void cacheInput(Inputs inputs, String input) {
         String[] games = input.split("\n");
         for (String game:games) {
-            inputs.getGames().add(loadMatch(game));
+            inputs.getGames().add(loadMatch(game.trim()));
         }
         this.inputs = inputs;
     }
